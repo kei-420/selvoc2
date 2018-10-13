@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="" method="post" class="ui form">
+    {% for field in form %}
+
+        <div class="ui input{% if field.errors %} error{% endif %}" align="center">
+            {{ field }}
+        {% if field.errors %}
+        <p>{{ field.errors.0 }}</p>
+
+        {% endif %}
+    {% endfor %}
+    {% csrf_token %}
+        </div>
+        <div align="center">
+            <button type="submit" class="submit-row">登録</button>
+        </div>
+    </form>
+{% endblock %}
