@@ -4,6 +4,7 @@ from django.contrib.auth import login as auth_login
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import SignUpForm
+from wordbook.forms import UserWordbookForm
 from wordbook.models import UserWordbook
 from .models import UsersManager
 
@@ -24,17 +25,13 @@ class SignUpView(View):
         user.set_password(form.cleaned_data['password'])
         user.save()
 
-        self.create_wordbook()
         auth_login(request, user)
         return redirect('accounts:login')
 
-    @staticmethod
-    def create_wordbook(request, instance, *args, **kwargs):
-        form = SignUpForm(request.POST)
+    def create_wordbook(self, request, *args, **kwargs):
+        form = UserWordbookForm
         if form.is_valid():
-            UserWordbook.objects.all().select_related('user_id')
-            UsersManager.objects.get(user_id=instance)
-            UserWordbook.objects.create(user_id=instance.id)
+            user_wordbook = form.save(commit=False)
 
 
 class LoginView(View):
