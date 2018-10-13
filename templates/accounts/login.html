@@ -1,5 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>This is the login page</h1>
+    <form action="" method="post" class="ui form">
+        <form action="" method="get" class="ui form">
+    {% for field in form %}
+
+        <div class="ui input{% if field.errors %} error{% endif %}" align="center">
+            {{ field }}
+        {% if field.errors %}
+        <p>{{ field.errors.0 }}</p>
+
+        {% endif %}
+    {% endfor %}
+    {% csrf_token %}
+        </div>
+        <div align="center">
+            <button type="submit" class="submit-row">登録</button>
+        </div>
+        </form>
+    </form>
 {% endblock %}
