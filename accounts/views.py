@@ -1,3 +1,5 @@
+import logging
+
 from django.conf import settings
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,40 +22,22 @@ class SignUpView(View):
         if not form.is_valid():
             return render(request, 'accounts/signup.html', {'form': form})
 
-        user = form.save(commit=True)
-        # user.set_password(form.cleaned_data['password'])
+        user = form.save(commit=False)
+        # get_user_id = user.user_id
+        # UserWordbook.objects.get_or_create(
+        #     pk=get_user_id
+        # )
+        user.set_password(form.cleaned_data['password'])
         user.save()
-
-        user_id = request.user.user_id
-        user_wordbook = UserWordbook(
-            user_id_id=user_id,
-        )
-        user_wordbook.save()
-
-        words = Wordbook.objects.all()
-        for n in words:
-            word_id = request.word.word_id
-            get_words = UserWordbook(
-                word_id=word_id[n],
-            )
-            get_words.save()
+        get_user_id = UsersManager.objects.get(pk=user.user_id)
+        UserWordbook.objects.get_or_create(user=get_user_id)
+        # get_word = Wordbook.objects.get(word_id=user.word_id)
+        # for word in get_word:
+        #     Wordbook.objects.filter(pk=word)
+        #     UserWordbook.objects.get_or_create(word=word)
 
         auth_login(request, user)
         return redirect('accounts:login')
-
-
-
-        # user_id = form.create_wordbook()
-        # user_id.save()
-        # user_id = UsersManager.objects.filter(username=form.get('username')).get('user_id')
-        # UserWordbook(user_id=user_id).save()
-        # user.username = UsersManager.objects.filter(username=user.username)
-        # user.user_id = UserWordbook(user_id=user.username.user_id).save()
-        # username = request.user.username
-        # user_id = UsersManager.objects.all().filter(user_id=username.id)
-        # UserWordbook(user_id=user_id).save()
-
-
 
 
 class LoginView(View):
