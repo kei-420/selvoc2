@@ -10,12 +10,12 @@ class Wordbook(models.Model):
     class Meta:
         db_table = 'wordbook'
 
-    word_id = models.AutoField(
+    word = models.AutoField(
         verbose_name='単語ID',
         unique=True,
         primary_key=True,
     )
-    word = models.CharField(
+    vocabulary = models.CharField(
         verbose_name='単語',
         max_length=150,
     )
@@ -38,7 +38,7 @@ class Wordbook(models.Model):
     )
 
     def __str__(self):
-        return self.word
+        return str(self.word) + ', ' + self.vocabulary
 
 
 class UserWordbook(models.Model):
@@ -47,20 +47,27 @@ class UserWordbook(models.Model):
     class Meta:
         db_table = 'user_wordbook'
 
-    user_wordbook_id = models.AutoField(
+    user_wordbook = models.AutoField(
         verbose_name='ユーザー単語帳ID',
         unique=True,
         primary_key=True,
     )
-    word_id = models.ForeignKey(
+    word = models.ForeignKey(
         Wordbook,
         verbose_name='単語ID',
-        on_delete=models.CASCADE,
-    )
-    user_id = models.OneToOneField(
-        UsersManager,
-        unique=True,
-        related_name='wordbook',
+        blank=True,
+        null=True,
         on_delete=models.PROTECT,
     )
+    user = models.ForeignKey(
+        UsersManager,
+        verbose_name='ユーザーID',
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+    )
+
+    def __str__(self):
+        return str(self.user_wordbook) + ', ' + str(self.word) + ', ' + str(self.user)
+
 
