@@ -29,6 +29,15 @@ class SignUpForm(ModelForm):
         self.fields['email'].required = True
         self.fields['email'].widget.attrs = {'placeholder': 'メールアドレス'}
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if len(username) < 3:
+            raise forms.ValidationError(
+                '%(min_length)s文字以上で入力して下さい',
+                params={'min_length': 3}
+            )
+        return username
+
     def clean(self):
         super(SignUpForm, self).clean()
         password = self.cleaned_data['password']
