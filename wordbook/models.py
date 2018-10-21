@@ -1,8 +1,13 @@
+import logging
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from accounts.models import UsersManager
+
+
+logger = logging.getLogger(__name__)
 
 
 class Wordbook(models.Model):
@@ -38,7 +43,7 @@ class Wordbook(models.Model):
     )
 
     def __str__(self):
-        return str(self.word) + ', ' + self.vocabulary
+        return str(self.word) + ' | ' + self.vocabulary
 
 
 class UserWordbook(models.Model):
@@ -52,12 +57,12 @@ class UserWordbook(models.Model):
         unique=True,
         primary_key=True,
     )
-    word = models.ForeignKey(
+    word = models.ManyToManyField(
         Wordbook,
         verbose_name='単語ID',
         blank=True,
         null=True,
-        on_delete=models.PROTECT,
+        # on_delete=models.PROTECT,
     )
     user = models.ForeignKey(
         UsersManager,
@@ -66,6 +71,18 @@ class UserWordbook(models.Model):
         null=True,
         on_delete=models.PROTECT,
     )
+    is_understood = models.BooleanField(
+       verbose_name='ユーザー理解度',
+       blank=False,
+       null=False,
+       default=False,
+   )
+
+    def __init__(self, word, user, *args, **kwargs):
+        super(UserWordbook, self).__init__(self, *args, **kwargs)
+        self.word = word
+        self.user = user
+        logger.info("__init__.UserWordbookの中にいます。")
 
     def __str__(self):
         return str(self.user_wordbook) + ', ' + str(self.word) + ', ' + str(self.user)

@@ -12,11 +12,13 @@
 
         {% endif %}
     {% endfor %}
-    {% csrf_token %}
         </div>
         <div align="center">
-            <button type="submit" class="submit-row">登録</button>
+            <button type="submit" class="submit-row">Sign Up</button>
+            {% csrf_token %}
         </div>
         </form>
+    <p>Already have an account? <a href="{% url 'accounts:login' %}">Login here</a></p>
     </form>
+
 {% endblock %}

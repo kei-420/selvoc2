@@ -15,8 +15,9 @@
     {% csrf_token %}
         </div>
         <div align="center">
-            <button type="submit" class="submit-row">登録</button>
+            <button type="submit" class="submit-row">Login</button>
         </div>
         </form>
+        <p>New to SELVOC? <a href="{% url 'accounts:signup' %}">Signup now!</a></p>
     </form>
 {% endblock %}

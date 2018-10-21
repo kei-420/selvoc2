@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="" method="POST">
+    <table class="table">
+        <tr>
+            <th>単語</th>
+            <td>{{ form.word }}</td>
+        </tr>
+    </table>
+    <button type="submit" class="btn btn-primary">追加</button>
+    {% csrf_token %}
+    </form>
+{% endblock %}

@@ -1,4 +1,5 @@
 import logging
+import time
 
 from django.conf import settings
 from django.contrib.auth import login as auth_login, logout as auth_logout
@@ -10,33 +11,38 @@ from wordbook.models import UserWordbook, Wordbook
 from .models import UsersManager
 
 
+logger = logging.getLogger(__name__)
+
+
 class SignUpView(View):
     def get(self, request, *args, **kwargs):
         context = {
             'form': SignUpForm(),
         }
+        logger.info("You are in get.SignUpView")
         return render(request, 'accounts/signup.html', context)
 
     def post(self, request, *args, **kwargs):
+        start_time = time.time()
+        logger.info("You are in post.SignUpView")
         form = SignUpForm(request.POST)
         if not form.is_valid():
             return render(request, 'accounts/signup.html', {'form': form})
 
         user = form.save(commit=False)
-        # get_user_id = user.user_id
-        # UserWordbook.objects.get_or_create(
-        #     pk=get_user_id
-        # )
+
         user.set_password(form.cleaned_data['password'])
         user.save()
         get_user_id = UsersManager.objects.get(pk=user.user_id)
         UserWordbook.objects.get_or_create(user=get_user_id)
-        # get_word = Wordbook.objects.get(word_id=user.word_id)
-        # for word in get_word:
-        #     Wordbook.objects.filter(pk=word)
-        #     UserWordbook.objects.get_or_create(word=word)
+
+        for word in Wordbook.objects.all():
+            uwb = UserWordbook(word, user)
+            uwb.save()
 
         auth_login(request, user)
+
+        logger.debug("Finished in {:.2f} sec.".format(time.time() - start_time))
         return redirect('accounts:login')
 
 

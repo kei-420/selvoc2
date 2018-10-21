@@ -1,5 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>This is the home page | {{ username }}</h1>
+  <table class="table mb-4">
+    <thead class="thead-dark">
+      <tr>
+        <th>単語</th>
+        <th>意味</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in word_list %}
+        <tr>
+          <td>{{ i.shown_word }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+<a href="{% url 'wordbook:add' %}" target="_blank">追加</a>
+  </table>
 {% endblock %}
