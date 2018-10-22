@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <h1>This is {{ user }}'s wordbook</h1>
   <table class="table mb-4">
     <thead class="thead-dark">
       <tr>
@@ -9,8 +10,9 @@
       </tr>
     </thead>
     <tbody>
-    <h1>This is {{ user }}'s wordbook</h1>
-    <th>{{ adding_word }}</th>
+    <tr>
+    {{ word.adding_word }}
+    </tr>
     </tbody>
 <a href="{% url 'wordbook:add' %}" target="_blank">追加</a>
   </table>

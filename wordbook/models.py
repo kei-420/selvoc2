@@ -6,12 +6,12 @@ from django.dispatch import receiver
 
 from accounts.models import UsersManager
 
-
 logger = logging.getLogger(__name__)
 
 
 class Wordbook(models.Model):
     """参照元単語リストモデル"""
+
     class Meta:
         db_table = 'wordbook'
 
@@ -69,19 +69,17 @@ class UserWordbook(models.Model):
         on_delete=models.PROTECT,
     )
     is_understood = models.BooleanField(
-       verbose_name='ユーザー理解度',
-       blank=False,
-       null=False,
-       default=False,
-   )
+        verbose_name='ユーザー理解度',
+        blank=False,
+        null=False,
+        default=False,
+    )
 
-     # def __init__(self, word, user, *args, **kwargs):
-     #    super(UserWordbook, self).__init__(self, *args, **kwargs)
-     #    self.word = word
-     #    self.user = user
-     #    logger.info("__init__.UserWordbookの中にいます。")
+    # def __init__(self, word, user, *args, **kwargs):
+    #    super(UserWordbook, self).__init__(self, *args, **kwargs)
+    #    self.word = word
+    #    self.user = user
+    #    logger.info("__init__.UserWordbookの中にいます。")
 
     def __str__(self):
         return str(self.user_wordbook) + ', ' + str(self.word) + ', ' + str(self.user)
-
-
