@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
- <form action="" method="post" class="ui form">
-     <form action="" method="get" class="ui form">
-         {% for word in wordlist %}
-
-         {% endfor %}
+<form method="post">
+<div align="center">
+  {{ form.word }}
+    <div><button type="submit" class="submit-row">追加</button></div>
+    {% csrf_token %}
+    <div><a href="{% url 'wordbook:home' %}">戻る</a></div>
+</div>
+</form>
        {#  {% for field in form %} #}
              {# <div class="ui input{% if field.errors %} error{% endif %}" align="center"> #}
              {# {{ field }} #}
@@ -14,11 +17,5 @@
              {#  {% endif %} #}
          {#  {% endfor %} #}
             {# </div> #}
-        <div align="center">
-            <button type="submit" class="submit-row">追加</button>
-            {% csrf_token %}
-        </div>
-     </form>
-     <div><a href="{% url 'wordbook:home' %}">戻る</a></div>
- </form>
+
 {% endblock %}

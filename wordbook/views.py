@@ -8,13 +8,17 @@ from django.urls import reverse_lazy
 from .forms import WordAddForm
 
 
-class Home(LoginRequiredMixin, View):
+class Home(LoginRequiredMixin, ListView):
     model = UserWordbook
     paginate_by = 10
     template_name = 'wordbook/home.html'
 
-    def get(self, request, *args, **kwargs):
-        return render(request, 'wordbook/home.html')
+    def add_word(self, request, *args, **kwargs):
+        adding_word = self.request.POST.get('word')
+        context = {
+            'adding_word': adding_word,
+        }
+        return render(request, 'wordbook/home.html', context)
 
     # def post(self, request, *args, **kwargs):
     #     form = WordAddForm
@@ -49,4 +53,5 @@ class WordAddView(LoginRequiredMixin, CreateView):
     form_class = WordAddForm
     template_name = 'wordbook/create_word.html'
     success_url = reverse_lazy('wordbook:home')
+
 
