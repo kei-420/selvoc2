@@ -30,14 +30,13 @@ class SignUpView(View):
             return render(request, 'accounts/signup.html', {'form': form})
 
         user = form.save(commit=False)
-
         user.set_password(form.cleaned_data['password'])
         user.save()
-        get_user_id = UsersManager.objects.get(pk=user.user_id)
-        UserWordbook.objects.get_or_create(user=get_user_id)
 
         for word in Wordbook.objects.all():
-            uwb = UserWordbook(word, user)
+            uwb = UserWordbook()
+            uwb.word = word
+            uwb.user = user
             uwb.save()
 
         auth_login(request, user)
@@ -67,7 +66,7 @@ class LoginView(View):
         return redirect(reverse('wordbook:home'))
 
 
-class LogoutView(View):
+class LogoutView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             auth_logout(request)

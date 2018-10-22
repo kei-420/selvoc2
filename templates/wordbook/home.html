@@ -9,11 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for i in word_list %}
-        <tr>
-          <td>{{ i.shown_word }}</td>
-        </tr>
-      {% endfor %}
+    <h1>This is {{ user }}'s wordbook</h1>
     </tbody>
 <a href="{% url 'wordbook:add' %}" target="_blank">追加</a>
   </table>

@@ -1,14 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form action="" method="POST">
-    <table class="table">
-        <tr>
-            <th>単語</th>
-            <td>{{ form.word }}</td>
-        </tr>
-    </table>
-    <button type="submit" class="btn btn-primary">追加</button>
-    {% csrf_token %}
-    </form>
+ <form action="" method="post" class="ui form">
+     <form action="" method="get" class="ui form">
+         {% for word in wordlist %}
+
+         {% endfor %}
+       {#  {% for field in form %} #}
+             {# <div class="ui input{% if field.errors %} error{% endif %}" align="center"> #}
+             {# {{ field }} #}
+             {#  {% if field.errors %} #}
+                 {#  <p>{{ field.errors.0 }}</p> #}
+             {#  {% endif %} #}
+         {#  {% endfor %} #}
+            {# </div> #}
+        <div align="center">
+            <button type="submit" class="submit-row">追加</button>
+            {% csrf_token %}
+        </div>
+     </form>
+     <div><a href="{% url 'wordbook:home' %}">戻る</a></div>
+ </form>
 {% endblock %}
