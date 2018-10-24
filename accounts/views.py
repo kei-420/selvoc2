@@ -33,11 +33,11 @@ class SignUpView(View):
         user.set_password(form.cleaned_data['password'])
         user.save()
 
-        for word in Wordbook.objects.all():
-            uwb = UserWordbook()
-            uwb.word = word
-            uwb.user = user
-            uwb.save()
+        # for word in Wordbook.objects.all():
+        #     uwb = UserWordbook()
+        #     uwb.word = word
+        #     uwb.user = user
+        #     uwb.save()
 
         auth_login(request, user)
 

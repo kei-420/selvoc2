@@ -1,21 +1,26 @@
 {% extends 'base.html' %}
-
+{% load bootstrap %}
 {% block content %}
-<form method="post">
-<div align="center">
-  {{ form.word }}
-    <div><button type="submit" class="submit-row">追加</button></div>
-    {% csrf_token %}
-    <div><a href="{% url 'wordbook:home' %}">戻る</a></div>
-</div>
-</form>
-       {#  {% for field in form %} #}
-             {# <div class="ui input{% if field.errors %} error{% endif %}" align="center"> #}
-             {# {{ field }} #}
-             {#  {% if field.errors %} #}
-                 {#  <p>{{ field.errors.0 }}</p> #}
-             {#  {% endif %} #}
-         {#  {% endfor %} #}
-            {# </div> #}
+    <form action="{% url 'wordbook:add' vocabulary_list = vocabulary_list %}" method="POST">
+    <div class="container" align="center">
+        <div class="row">
+            <div class="col-12">
+            {{ form.as_p }}
+
+
+            {# {% for vocabulary in vocabulary_set %} #}
+            {# <option>{{ vocabulary }}</option> #}
+    </div>
+        </div>
+      <div class="row" align="center">
+        <div class="col-12">
+          <button class="btn btn-primary">保存</button>
+                      {% csrf_token %}
+          <a href="{% url 'wordbook:home' %}" class="btn btn-primary">戻る</a>
+
+        </div>
+      </div>
+    </div>
+    </form>
 
 {% endblock %}

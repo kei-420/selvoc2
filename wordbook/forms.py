@@ -1,28 +1,61 @@
 from django import forms
 
 from django.forms import ModelForm
-from .models import UserWordbook
+from .models import Wordbook
 
 
-class WordAddForm(ModelForm):
+class WordAddForm(forms.Form):
+    vocabulary_list = forms.ModelChoiceField(
+        queryset=Wordbook.objects.all(),
+        label='追加単語',
+        to_field_name='vocabulary'
+    )
 
-    def __init__(self, *args, **kwargs):
-        super(WordAddForm, self).__init__(*args, **kwargs)
-        # for field in self.fields.values():
-        #     field.widget.attrs['class'] = 'form-control'
+    # class Meta:
+    #     model = Wordbook
+    #     fields = ['vocabulary_list', ]
+    # def __init__(self, queryset, *args, **kwargs):
+    #     super(WordAddForm, self).__init__(*args, **kwargs)
+    #     self.fields['vocabulary_list'] = queryset
+    #     if queryset:
+    #         self.fields['vocabulary_list'] = queryset
+    # def __init__(self, queryset=None, *args, **kwargs):
+    #     super(WordAddForm, self).__init__(*args, **kwargs)
+    #     self.fields['vocabulary_list'] = queryset
+    #     if queryset:
+    #         self.fields['vocabulary_list'].queryset = queryset
 
-    class Meta:
-        model = UserWordbook
-        fields = ('word',)
-        widgets = {
-            'word': forms.TextInput(attrs={'placeholder': '単語'})
-        }
+    # def __int__(self, *args, **kwargs):
+    #     super(WordAddForm, self).__int__(*args, **kwargs)
+    #     self.fields['vocabulary'].widget.attrs = {'placeholder': '追加単語'}
+    #
+    # def clean_vocabulary(self):
+    #     vocabulary = self.cleaned_data['vocabulary']
+    #     vocabulary_set = Wordbook.objects.filter(vocabulary=vocabulary)
+    #     if vocabulary_set:
+    #         return vocabulary
+    #     else:
+    #         forms.ValidationError(
+    #             '%(error_vocab)sは存在しません。',
+    #             params={'error_vocab': vocabulary}
+    #         )
 
-    def clean_word(self):
-        word = self.cleaned_data['word']
-        if word not in UserWordbook.objects.get(word=word):
-            raise forms.ValidationError(
-                '%(error_word)sは認識されませんでした。',
-                params={'error_word': word}
-            )
-        return word
+    # def __init__(self, queryset=None, *args, **kwargs):
+    #     super(WordAddForm, self).__init__(*args, **kwargs)
+    #     self.fields['vocabulary'] = queryset
+    #     if queryset:
+    #         self.fields['vocabulary'].queryset = queryset
+    #
+    # def clean_vocabulary(self):
+    #     vocabulary = self.cleaned_data['vocabulary']
+    #     vocabulary_set = Wordbook.objects.all()
+    #     for v in vocabulary_set:
+    #         if vocabulary == Wordbook.objects.filter(vocabulary=v):
+    #             return vocabulary
+    #         else:
+    #             forms.ValidationError(
+    #                 '%(error_vocab)sは存在しません。',
+    #                 params={'error_vocab': 3},
+    #             )
+
+

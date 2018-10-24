@@ -43,7 +43,7 @@ class Wordbook(models.Model):
     )
 
     def __str__(self):
-        return str(self.word) + ' | ' + self.vocabulary
+        return self.vocabulary + ' | ' + self.word_class + ' | ' + self.word_meaning
 
 
 class UserWordbook(models.Model):
@@ -68,6 +68,7 @@ class UserWordbook(models.Model):
         related_name='login_user',
         on_delete=models.PROTECT,
     )
+
     is_understood = models.BooleanField(
         verbose_name='ユーザー理解度',
         blank=False,

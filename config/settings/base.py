@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'wordbook.apps.WordbookConfig',
+    'bootstrapform',
 ]
 
 MIDDLEWARE = [

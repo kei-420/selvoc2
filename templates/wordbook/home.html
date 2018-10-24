@@ -1,19 +1,46 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <h1>This is {{ user }}'s wordbook</h1>
-  <table class="table mb-4">
-    <thead class="thead-dark">
-      <tr>
-        <th>単語</th>
-        <th>意味</th>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-    {{ word.adding_word }}
-    </tr>
-    </tbody>
-<a href="{% url 'wordbook:add' %}" target="_blank">追加</a>
-  </table>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-default">
+              <table border="1" cellspacing="0" cellpadding="5">
+<tr align="center">
+<th>単語</th>
+<th>品詞</th>
+<th>意味</th>
+</tr>
+<tr align="center">
+{% for v, wc, wm in vocabulary_list %}
+<td>{{ v }}</td>
+<td >{{ wc }}</td>
+<td>{{ wm }}</td>
+</tr>
+{% endfor%}
+</table>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="mt-3 text-center">
+          {% if page_obj.has_previous %}
+            <a class="btn btn-secondary" href="/?page={{ page_obj.previous_page_number }}">前へ</a>
+          {% endif %}
+          <span>{{ page_obj.number }}/{{ paginator.num_pages }}ページ</span>
+          {% if page_obj.has_next %}
+            <a class="btn btn-secondary" href="/?page={{ page_obj.next_page_number }}">次へ</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12 mt-3" align="center">
+        <p><a href="{% url 'wordbook:add' %}" class="btn btn-primary">新規作成</a></p>
+          <p><a href="{% url 'accounts:logout' %}" class="btn btn-primary">logout</a></p>
+      </div>
+    </div>
+  </div>
 {% endblock %}
