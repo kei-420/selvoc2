@@ -23,6 +23,7 @@ class Wordbook(models.Model):
     vocabulary = models.CharField(
         verbose_name='単語',
         max_length=150,
+        unique=True,
     )
     word_class = models.CharField(
         verbose_name='品詞',
@@ -43,7 +44,7 @@ class Wordbook(models.Model):
     )
 
     def __str__(self):
-        return self.vocabulary + ' | ' + self.word_class + ' | ' + self.word_meaning
+        return self.vocabulary
 
 
 class UserWordbook(models.Model):
@@ -83,4 +84,4 @@ class UserWordbook(models.Model):
     #    logger.info("__init__.UserWordbookの中にいます。")
 
     def __str__(self):
-        return str(self.user_wordbook) + ', ' + str(self.word) + ', ' + str(self.user)
+        return str(self.word)
