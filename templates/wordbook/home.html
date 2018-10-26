@@ -5,20 +5,27 @@
     <div class="row">
       <div class="col-12">
         <div class="card card-default">
-<table border="1" cellspacing="0" cellpadding="5">
-<tr align="center">
-<th>単語</th>
-<th>品詞</th>
-<th>意味</th>
-</tr>
-<tr>
-{% for v in vocabulary_list %}
-    <td>{{ v.vocabulary }}</td>
-    <td>{{ v.word_class }}</td>
-    <td>{{ v.word_meaning }}</td>
-</tr>
-{% endfor%}
-</table>
+            <table class="table">
+                {% for v in vocabulary_list %}
+                    <tr>
+                        <td>{{ v.vocabulary }}</td>
+                        <td>{{ v.word_class }}</td>
+                        <td>{{ v.word_meaning }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="mt-3 text-center">
+          {% if page_obj.has_previous %}
+            <a class="btn btn-secondary" href="/?page={{ page_obj.previous_page_number }}">前へ</a>
+          {% endif %}
+          <span>{{ page_obj.number }}/{{ paginator.num_pages }}ページ</span>
+          {% if page_obj.has_next %}
+            <a class="btn btn-secondary" href="/?page={{ page_obj.next_page_number }}">次へ</a>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -26,9 +33,9 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-12 mt-3" align="center">
-        <p><a href="{% url 'wordbook:add' %}" class="btn btn-primary">新規作成</a></p>
-          <p><a href="{% url 'accounts:logout' %}" class="btn btn-primary">logout</a></p>
+      <div class="col-12 mt-3">
+        <a href="{% url 'wordbook:add' %}" class="btn btn-primary">単語追加</a>
+          <a class="btn btn-primary" href="{% url 'accounts:logout' %}">Log out</a>
       </div>
     </div>
   </div>

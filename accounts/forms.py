@@ -81,13 +81,13 @@ class LoginForm(forms.Form):
         username = self.cleaned_data['username']
         password = self.cleaned_data['password']
         try:
-            user = UsersManager.objects.get(username=username)
+            login_user = UsersManager.objects.get(username=username)
         except ObjectDoesNotExist:
             raise forms.ValidationError('正しいユーザー名を入力して下さい。')
-        if not user.check_password(password):
+        if not login_user.check_password(password):
             raise forms.ValidationError('正しいユーザー名とパスワードを入力して下さい。')
 
-        self.user_cache = user
+        self.user_cache = login_user
 
     def get_user(self):
         return self.user_cache

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load bootstrap %}
 {% block content %}
-    <form action="" method="post">{% csrf_token %}
+    <form action="" method="post" class="post-form">{% csrf_token %}
         <div class="text" align="center">
             <div class="row">
                 <div class="col-12">
@@ -10,7 +10,7 @@
             </div>
             <div class="row" align="center">
                 <div class="col-12">
-                    <button class="btn btn-primary">保存</button>
+                    <button type="submit" class="btn btn-primary">追加</button>
                     <a href="{% url 'wordbook:home' %}" class="btn btn-primary">戻る</a>
                 </div>
             </div>

@@ -76,12 +76,11 @@ class UserWordbook(models.Model):
         null=False,
         default=False,
     )
-
     # def __init__(self, word, user, *args, **kwargs):
-    #    super(UserWordbook, self).__init__(self, *args, **kwargs)
-    #    self.word = word
-    #    self.user = user
-    #    logger.info("__init__.UserWordbookの中にいます。")
+    #     super(UserWordbook, self).__init__(self, *args, **kwargs)
+    #     self.word = word
+    #     self.user = user
+    # logger.info("__init__.UserWordbookの中にいます。")
 
     def __str__(self):
-        return str(self.word)
+        return str(self.user_wordbook) + ': ' + str(self.user) + ' / ' + str(self.word)
